@@ -1,0 +1,23 @@
+server: 
+  port: 8080
+
+# for 1 database
+# database:
+#   host: localhost
+#   user: admin
+#   password: admin
+#   dbName: shopDEV
+
+# for 2 databases
+databases:
+  - user: admin
+    password: admin
+    host: localhost
+    dbName: shopDEV
+  - user: order
+    password: order
+    host: localhost
+    dbName: orderDEV
+security:
+  jwt:
+    key: 123456789
