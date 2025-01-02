@@ -1,10 +1,9 @@
 package controllers
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/tqlong1609/go_backend_ecommerce/internal/services"
+	"github.com/tqlong1609/go_backend_ecommerce/pkg/response"
 )
 
 type Pong1Controller struct {
@@ -18,8 +17,5 @@ func InitPong1Controller() *Pong1Controller {
 }
 
 func (pc *Pong1Controller) GetPong1(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": pc.pong1Service.GetPongService(),
-		"users":   []string{"user1", "user2", "user3"},
-	})
+	response.SuccessResponse(c, response.SuccessCode, []string{"hello1", "hello2"})
 }
