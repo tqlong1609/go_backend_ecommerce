@@ -1,0 +1,2 @@
+{"level":"INFO","time":"2025-01-02T14:09:48.038+0700","caller":"cli/main.log.go:23","msg":"Hello","name":"Long","age":26}
+{"level":"ERROR","time":"2025-01-02T14:09:48.038+0700","caller":"cli/main.log.go:24","msg":"error log","hehe":123}
