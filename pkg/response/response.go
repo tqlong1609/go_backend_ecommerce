@@ -17,7 +17,7 @@ func SuccessResponse(c *gin.Context, code int, data interface{}) {
 }
 
 func FailResponse(c *gin.Context, code int) {
-	c.JSON(200, GetResponse{
+	c.JSON(401, GetResponse{
 		Code:    code,
 		Message: GetHttpCodeMessage(code),
 		Data:    nil,

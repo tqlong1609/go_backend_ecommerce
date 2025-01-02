@@ -1,13 +1,15 @@
 package response
 
 const (
-	SuccessCode = 200
-	FailCode    = 500
+	SuccessCode      = 200
+	FailCode         = 500
+	UnauthorizedCode = 401
 )
 
 var HttpCodeMessage = map[int]string{
-	SuccessCode: "success",
-	FailCode:    "fail",
+	SuccessCode:      "success",
+	FailCode:         "fail",
+	UnauthorizedCode: "unauthorized",
 }
 
 func GetHttpCodeMessage(code int) string {

@@ -38,3 +38,8 @@ graph TD
 ```bash
 go mod init
 ```
+
+# Run
+```bash
+curl -H "Authorization: token" http://localhost:8080/v1/ping1
+```
