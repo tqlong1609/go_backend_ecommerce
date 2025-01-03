@@ -43,3 +43,11 @@ go mod init
 ```bash
 curl -H "Authorization: token" http://localhost:8080/v1/ping1
 ```
+
+# Test
+```bash
+go test -v
+go test -coverprofile=coverage.out
+go tool cover -html=coverage.out -o coverage.html
+start coverage.html
+```
