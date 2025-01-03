@@ -1,0 +1,2 @@
+{"level":"INFO","time":"2025-01-03T16:50:26.321+0700","caller":"initialize/run.go:8","msg":"logger init success"}
+{"level":"INFO","time":"2025-01-03T16:52:56.909+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}

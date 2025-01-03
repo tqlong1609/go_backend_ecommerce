@@ -1,7 +1,8 @@
 package setting
 
 type Config struct {
-	Mysql MySQLSetting `mapstructure:"mysql"`
+	Mysql  MySQLSetting  `mapstructure:"mysql"`
+	Logger LoggerSetting `mapstructure:"logger"`
 }
 
 type MySQLSetting struct {
@@ -13,4 +14,13 @@ type MySQLSetting struct {
 	MaxIdleConns int    `mapstructure:"maxIdleConnection"`
 	MaxOpenConns int    `mapstructure:"maxOpenConnection"`
 	MaxLifeTime  int    `mapstructure:"maxLifeTime"`
+}
+
+type LoggerSetting struct {
+	Log_level   string `mapstructure:"log_level"`
+	File_path   string `mapstructure:"file_path"`
+	Max_size    int    `mapstructure:"max_size"`
+	Max_backups int    `mapstructure:"max_backups"`
+	Max_age     int    `mapstructure:"max_age"`
+	Compress    bool   `mapstructure:"compress"`
 }

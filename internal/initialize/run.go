@@ -1,15 +1,14 @@
 package initialize
 
 import (
-	"fmt"
-
 	"github.com/tqlong1609/go_backend_ecommerce/global"
+	"go.uber.org/zap"
 )
 
 func Run() {
 	InitConfig()
-	fmt.Println("Init config", global.Config.Mysql.Username)
 	InitLogger()
+	global.Logger.Info("logger init success", zap.String("hello", "world"))
 	InitMySql()
 	InitRedis()
 
