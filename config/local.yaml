@@ -1,23 +1,11 @@
 server: 
   port: 8080
-
-# for 1 database
-# database:
-#   host: localhost
-#   user: admin
-#   password: admin
-#   dbName: shopDEV
-
-# for 2 databases
-databases:
-  - user: admin
-    password: admin
-    host: localhost
-    dbName: shopDEV
-  - user: order
-    password: order
-    host: localhost
-    dbName: orderDEV
-security:
-  jwt:
-    key: 123456789
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  username: root
+  password: 123456
+  database: test
+  maxIdleConnection: 10
+  maxOpenConnection: 100
+  maxLifeTime: 3600
