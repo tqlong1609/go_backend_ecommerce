@@ -4,40 +4,44 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/tqlong1609/go_backend_ecommerce/internal/controllers"
-	"github.com/tqlong1609/go_backend_ecommerce/internal/middlewares"
+	"github.com/tqlong1609/go_backend_ecommerce/global"
+	"github.com/tqlong1609/go_backend_ecommerce/internal/routers"
 )
 
-func AAA() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		fmt.Println("Before AAA")
-		c.Next()
-		fmt.Println("After AAA")
-	}
-}
-
-func BBB() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		fmt.Println("Before BBB")
-		c.Next()
-		fmt.Println("After BBB")
-	}
-}
-
-func CCC(c *gin.Context) {
-	fmt.Println("Before CCC")
-	c.Next()
-	fmt.Println("After CCC")
-}
-
 func InitRouter() *gin.Engine {
-	r := gin.Default()
-	// r.Use(AAA(), BBB(), CCC)
-	r.Use(middlewares.AuthMiddleware(), BBB(), CCC)
-	v1 := r.Group("/v1")
-	{
-		v1.GET("/ping/:name", controllers.InitPongController().GetPong) // /v1/ping/hello
-		v1.GET("/ping1", controllers.InitPong1Controller().GetPong1)    // /v1/ping1?id=123
+	severConfig := global.Config.Server
+	var r *gin.Engine
+	global.Logger.Info(fmt.Sprintf("Server is running in %s mode", severConfig.Mode))
+	if severConfig.Mode == "dev" {
+		gin.SetMode(gin.DebugMode)
+		gin.ForceConsoleColor()
+		r = gin.Default()
+	} else {
+		gin.SetMode(gin.ReleaseMode)
+		r = gin.New()
 	}
+
+	// ### middleware ###
+	// logging
+	// cross
+	// limiter global
+	// ### End ###
+
+	adminRouter := routers.RouterGroupApp.Admin
+	userRouter := routers.RouterGroupApp.User
+
+	mainGroup := r.Group("/v1")
+	{
+		mainGroup.GET("/ping") // tracking monitor
+	}
+	{
+		userRouter.InitUserRouter(mainGroup)
+		userRouter.InitProductRouter(mainGroup)
+	}
+	{
+		adminRouter.InitUserRouter(mainGroup)
+		adminRouter.InitAdminRouter(mainGroup)
+	}
+
 	return r
 }
