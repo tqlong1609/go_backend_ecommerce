@@ -1,3 +1,15 @@
 {"level":"INFO","time":"2025-01-03T17:09:49.942+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
 {"level":"INFO","time":"2025-01-03T17:56:22.122+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
 {"level":"ERROR","time":"2025-01-03T17:56:22.126+0700","caller":"initialize/mysql.go:14","msg":"mysql init error","error":"dial tcp 127.0.0.1:3306: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"github.com/tqlong1609/go_backend_ecommerce/internal/initialize.checkErrorPanic\n\tC:/Users/Archer/Desktop/go_course/go_backend_ecommerce/internal/initialize/mysql.go:14\ngithub.com/tqlong1609/go_backend_ecommerce/internal/initialize.InitMySql\n\tC:/Users/Archer/Desktop/go_course/go_backend_ecommerce/internal/initialize/mysql.go:27\ngithub.com/tqlong1609/go_backend_ecommerce/internal/initialize.Run\n\tC:/Users/Archer/Desktop/go_course/go_backend_ecommerce/internal/initialize/run.go:12\nmain.main\n\tC:/Users/Archer/Desktop/go_course/go_backend_ecommerce/cmd/server/main.go:8\nruntime.main\n\tC:/Program Files (x86)/Go/src/runtime/proc.go:271"}
+{"level":"INFO","time":"2025-01-04T11:05:18.286+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
+{"level":"INFO","time":"2025-01-04T11:05:44.720+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
+{"level":"INFO","time":"2025-01-04T11:05:58.154+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
+{"level":"INFO","time":"2025-01-04T11:13:36.885+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
+{"level":"INFO","time":"2025-01-04T11:29:46.230+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
+{"level":"INFO","time":"2025-01-04T11:29:46.272+0700","caller":"initialize/postgresql.go:40","msg":"PostgreSQL init successfully"}
+{"level":"INFO","time":"2025-01-04T19:04:35.519+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
+{"level":"INFO","time":"2025-01-04T19:04:35.564+0700","caller":"initialize/postgresql.go:42","msg":"PostgreSQL init successfully"}
+{"level":"INFO","time":"2025-01-04T19:04:37.327+0700","caller":"initialize/postgresql.go:80","msg":"PostgreSQL migrate tables successfully"}
+{"level":"INFO","time":"2025-01-04T19:18:23.037+0700","caller":"initialize/run.go:11","msg":"logger init success","hello":"world"}
+{"level":"INFO","time":"2025-01-04T19:18:23.084+0700","caller":"initialize/postgresql.go:42","msg":"PostgreSQL init successfully"}
+{"level":"INFO","time":"2025-01-04T19:18:23.500+0700","caller":"initialize/postgresql.go:80","msg":"PostgreSQL migrate tables successfully"}

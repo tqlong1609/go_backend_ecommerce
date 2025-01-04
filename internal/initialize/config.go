@@ -7,17 +7,6 @@ import (
 	"github.com/tqlong1609/go_backend_ecommerce/global"
 )
 
-type Config struct {
-	Server struct {
-		Port int `mapstructure:"port"`
-	} `mapstructure:"server"`
-	Databases []struct {
-		User     string `mapstructure:user`
-		Password string `mapstructure:password`
-		Host     string `mapstructure:host`
-	} `mapstructure:"databases"`
-}
-
 func InitConfig() {
 	viper := viper.New()
 	viper.AddConfigPath("./config/")

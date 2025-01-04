@@ -1,11 +1,23 @@
 package setting
 
 type Config struct {
-	Mysql  MySQLSetting  `mapstructure:"mysql"`
-	Logger LoggerSetting `mapstructure:"logger"`
+	Mysql      MySQLSetting      `mapstructure:"mysql"`
+	PostgreSQL PostgreSQLSetting `mapstructure:"postgresql"`
+	Logger     LoggerSetting     `mapstructure:"logger"`
 }
 
 type MySQLSetting struct {
+	Host         string `mapstructure:"host"`
+	Port         int    `mapstructure:"port"`
+	Username     string `mapstructure:"username"`
+	Password     string `mapstructure:"password"`
+	Database     string `mapstructure:"database"`
+	MaxIdleConns int    `mapstructure:"maxIdleConnection"`
+	MaxOpenConns int    `mapstructure:"maxOpenConnection"`
+	MaxLifeTime  int    `mapstructure:"maxLifeTime"`
+}
+
+type PostgreSQLSetting struct {
 	Host         string `mapstructure:"host"`
 	Port         int    `mapstructure:"port"`
 	Username     string `mapstructure:"username"`
