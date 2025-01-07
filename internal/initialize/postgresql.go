@@ -6,9 +6,10 @@ import (
 
 	_ "github.com/lib/pq"
 	"github.com/tqlong1609/go_backend_ecommerce/global"
-	"github.com/tqlong1609/go_backend_ecommerce/internal/po"
+	"github.com/tqlong1609/go_backend_ecommerce/internal/model"
 	"go.uber.org/zap"
 	"gorm.io/driver/postgres"
+	"gorm.io/gen"
 	"gorm.io/gorm"
 )
 
@@ -48,6 +49,29 @@ func InitPostgresql() {
 
 	// Migrate
 	migrateTables()
+	genTableDAO()
+}
+
+func genTableDAO() {
+	g := gen.NewGenerator(gen.Config{
+		OutPath: "./internal/model",
+		Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
+	})
+
+	// gormdb, _ := gorm.Open(mysql.Open("root:@(127.0.0.1:3306)/demo?charset=utf8mb4&parseTime=True&loc=Local"))
+	g.UseDB(global.Mdb) // reuse your gorm db
+	// g.GenerateAllTable()
+	// g.GenerateModel("users")
+	// g.GenerateModel("categories")
+
+	// Generate basic type-safe DAO API for struct `model.User` following conventions
+	// g.ApplyBasic(model.User{})
+
+	// Generate Type Safe API with Dynamic SQL defined on Querier interface for `model.User` and `model.Company`
+	// g.ApplyInterface(func(Querier) {}, model.User{}, model.Company{})
+
+	// Generate the code
+	g.Execute()
 }
 
 // được sử dụng để tối ưu hóa việc quản lý pool kết nối với cơ sở dữ liệu
@@ -75,7 +99,8 @@ func setConnectionPool() {
 }
 
 func migrateTables() {
-	err := global.Mdb.AutoMigrate(&po.User{}, &po.Role{})
+	// err := global.Mdb.AutoMigrate(&po.User{}, &po.Role{})
+	err := global.Mdb.AutoMigrate(&model.UsersV2{})
 	checkErrorPanic(err, "PostgreSQL migrate tables error")
 	global.Logger.Info("PostgreSQL migrate tables successfully")
 }

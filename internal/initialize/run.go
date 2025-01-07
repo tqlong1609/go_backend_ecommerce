@@ -11,7 +11,7 @@ func Run() {
 	global.Logger.Info("logger init success", zap.String("hello", "world"))
 	// InitMySql()
 	InitPostgresql()
-	InitRedis()
+	// InitRedis()
 
 	r := InitRouter()
 
