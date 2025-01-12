@@ -24,6 +24,13 @@ func InitPostgresql() {
 
 	pg := global.Config.PostgreSQL
 
+	global.Logger.Info("PostgreSQL connection info",
+		zap.String("host", pg.Host),
+		zap.Int("port", pg.Port),
+		zap.String("user", pg.Username),
+		zap.String("password", pg.Password),
+		zap.String("dbname", pg.Database))
+
 	// sslmode=disable: Vô hiệu hóa SSL (phù hợp cho development). Trong production, bạn nên cấu hình chế độ SSL an toàn
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",

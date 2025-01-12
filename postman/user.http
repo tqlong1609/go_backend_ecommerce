@@ -1,6 +1,6 @@
 @url_dev = http://localhost:8080/v1
 
-POST {{url_dev}}/user/register
+GET {{url_dev}}/ping
 Content-Type: application/json
 
 {
