@@ -25,4 +25,6 @@ go.work.sum
 .env
 
 # log folder
-storages/logs/
+storages/logs
+
+tmp

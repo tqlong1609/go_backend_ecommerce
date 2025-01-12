@@ -32,7 +32,7 @@ func InitRouter() *gin.Engine {
 
 	mainGroup := r.Group("/v1")
 	{
-		mainGroup.GET("/ping") // tracking monitor
+		mainGroup.GET("/ping", func(c *gin.Context) { c.JSON(200, gin.H{"message": "Welcome to my app 333... :vv"}) })
 	}
 	{
 		userRouter.InitUserRouter(mainGroup)

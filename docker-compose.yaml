@@ -25,15 +25,8 @@ services:
       - "8080:8080"
     volumes:
       - ./config:/config
-    environment:
-      - ENV=local
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=store_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=quanglong
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      # - .:/app # This is for dockerfile.dev.v1
+      - ./:/app # This is for dockerfile.dev.v2
     depends_on:
       postgres:
         condition: service_healthy
