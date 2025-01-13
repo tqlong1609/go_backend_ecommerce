@@ -51,3 +51,15 @@ go test -coverprofile=coverage.out
 go tool cover -html=coverage.out -o coverage.html
 start coverage.html
 ```
+
+# Sqlc
+- only run on PowerShell
+```bash
+docker run --rm -v "${PWD}:/src" -w /src sqlc/sqlc generate
+```
+
+# goose
+- create table
+```bash
+goose -dir sql/schema create go_crm_user sql
+```

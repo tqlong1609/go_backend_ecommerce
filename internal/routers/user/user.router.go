@@ -24,6 +24,6 @@ func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	// private router
 	userRouterPrivate := Router.Group("/user")
 	{
-		userRouterPrivate.POST("/get_info")
+		userRouterPrivate.GET("/:id", userController.GetUserAccountByUserId)
 	}
 }

@@ -1,15 +1,37 @@
 package repo
 
+import (
+	"context"
+
+	"github.com/tqlong1609/go_backend_ecommerce/global"
+	"github.com/tqlong1609/go_backend_ecommerce/internal/database"
+)
+
 type IUserRepository interface {
-	GetUserByEmail(email string) (string, error)
+	CreateNewUser(account string, password string, salt string) (int32, error)
+	GetUserAccountByUserId(userId int32) (string, error)
 }
 
-type userRepository struct{}
+type userRepository struct {
+	sqlc *database.Queries
+}
 
 func InitUserRepository() IUserRepository {
-	return &userRepository{}
+	return &userRepository{
+		sqlc: database.New(global.Mdbc),
+	}
 }
 
-func (ur *userRepository) GetUserByEmail(email string) (string, error) {
-	return "user", nil
+func (ur *userRepository) CreateNewUser(account string, password string, salt string) (int32, error) {
+	userId, err := ur.sqlc.CreateNewUser(context.Background(), database.CreateNewUserParams{
+		UserAccount:  account,
+		UserPassword: password,
+		UserSalt:     salt,
+	})
+	return userId, err
+}
+
+func (ur *userRepository) GetUserAccountByUserId(userId int32) (string, error) {
+	userAccount, err := ur.sqlc.GetUserAccountByUserId(context.Background(), userId)
+	return userAccount, err
 }

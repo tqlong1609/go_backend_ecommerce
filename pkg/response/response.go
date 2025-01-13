@@ -9,17 +9,21 @@ type GetResponse struct {
 }
 
 func SuccessResponse(c *gin.Context, code int, data interface{}) {
-	c.JSON(200, GetResponse{
+	c.JSON(code, GetResponse{
 		Code:    code,
 		Message: GetHttpCodeMessage(code),
 		Data:    data,
 	})
 }
 
-func FailResponse(c *gin.Context, code int) {
-	c.JSON(401, GetResponse{
+func FailResponse(c *gin.Context, code int, msg ...string) {
+	message := GetHttpCodeMessage(code)
+	if len(msg) > 0 {
+		message = msg[0]
+	}
+	c.JSON(code, GetResponse{
 		Code:    code,
-		Message: GetHttpCodeMessage(code),
+		Message: message,
 		Data:    nil,
 	})
 }

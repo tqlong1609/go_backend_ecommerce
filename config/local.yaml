@@ -11,7 +11,8 @@ mysql:
   maxOpenConnection: 100
   maxLifeTime: 3600
 postgresql:
-  host: postgres
+  host: 127.0.0.1
+  # host: postgres
   port: 5432
   username: postgres
   password: quanglong
@@ -27,7 +28,8 @@ logger:
   max_age: 28 
   compress: true
 redis:
-  host: redis
+  host: 127.0.0.1
+  # host: redis
   port: 6379
   password:
   database: 0

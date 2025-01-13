@@ -24,13 +24,6 @@ func InitPostgresql() {
 
 	pg := global.Config.PostgreSQL
 
-	global.Logger.Info("PostgreSQL connection info",
-		zap.String("host", pg.Host),
-		zap.Int("port", pg.Port),
-		zap.String("user", pg.Username),
-		zap.String("password", pg.Password),
-		zap.String("dbname", pg.Database))
-
 	// sslmode=disable: Vô hiệu hóa SSL (phù hợp cho development). Trong production, bạn nên cấu hình chế độ SSL an toàn
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
@@ -46,8 +39,8 @@ func InitPostgresql() {
 		// Nếu đặt là false, nghĩa là GORM sẽ tự động tạo giao dịch mặc định cho các thao tác như Create, Update, hoặc Delete. Điều này đảm bảo an toàn trong các trường hợp xảy ra lỗi, nhưng có thể ảnh hưởng đến hiệu suất
 	})
 
-	checkErrorPanic(err, "PostgreSQL init error")
-	global.Logger.Info("PostgreSQL init successfully")
+	checkErrorPanic(err, "PostgreSQL init error (Gorm)")
+	global.Logger.Info("PostgreSQL init successfully (Gorm)")
 	global.Mdb = db
 	// defer db.Close()
 
