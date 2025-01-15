@@ -2,3 +2,12 @@
 
 GET {{url_dev}}/ping
 Content-Type: application/json
+###
+POST {{url_dev}}/user/register
+Content-Type: application/json
+
+{
+  "account": "test@test.com",
+  "password": "123456"
+}
+###

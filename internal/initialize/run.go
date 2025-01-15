@@ -12,6 +12,8 @@ func Run() {
 	// InitMySql()
 	// InitPostgresql()
 	InitPostgresqlC()
+	InitServiceInterface()
+
 	InitRedis()
 
 	r := InitRouter()
