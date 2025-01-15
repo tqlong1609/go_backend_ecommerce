@@ -53,7 +53,7 @@ start coverage.html
 ```
 
 # Sqlc
-- only run on PowerShell
+- only run on PowerShell in Windows
 ```bash
 docker run --rm -v "${PWD}:/src" -w /src sqlc/sqlc generate
 ```
@@ -61,5 +61,5 @@ docker run --rm -v "${PWD}:/src" -w /src sqlc/sqlc generate
 # goose
 - create table
 ```bash
-goose -dir sql/schema create go_crm_user sql
+make create_migration name=name_migration
 ```

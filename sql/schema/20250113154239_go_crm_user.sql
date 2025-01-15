@@ -1,5 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
+DROP TABLE IF EXISTS go_crm_user;
 CREATE TABLE IF NOT EXISTS go_crm_user (
     user_id SERIAL PRIMARY KEY, -- PostgreSQL sử dụng SERIAL để tự động tăng
     user_account VARCHAR(100) NOT NULL UNIQUE,

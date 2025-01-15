@@ -40,15 +40,16 @@ docker-clean:
 
 # Section II: goose commands
 
-sqlgen:
-	docker run --rm -v "${PWD}:/src" -w /src sqlc/sqlc generate
+create_migration:
+	goose -dir=$(GOOSE_MIGRATIONS_DIR) create $(name) sql
 up:
 	@GOOSE_DRIVER=$(GOOSE_DRIVER) GOOSE_DBSTRING=$(GOOSE_DBSTRING) goose -dir=$(GOOSE_MIGRATIONS_DIR) up
 down:
 	@GOOSE_DRIVER=$(GOOSE_DRIVER) GOOSE_DBSTRING=$(GOOSE_DBSTRING) goose -dir=$(GOOSE_MIGRATIONS_DIR) down
 reset:
 	@GOOSE_DRIVER=$(GOOSE_DRIVER) GOOSE_DBSTRING=$(GOOSE_DBSTRING) goose -dir=$(GOOSE_MIGRATIONS_DIR) reset
-
+up-by-one:
+	@GOOSE_DRIVER=$(GOOSE_DRIVER) GOOSE_DBSTRING=$(GOOSE_DBSTRING) goose -dir=$(GOOSE_MIGRATIONS_DIR) up-by-one
 # Specifies that the targets (run, up, down, reset) are not actual files or directories, but commands to run.
 # Avoid Make mistaking the target for a file if there is a file of the same name in the directory
 .PHONY: run up down reset sqlgen

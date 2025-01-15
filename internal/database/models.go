@@ -19,3 +19,30 @@ type GoCrmUser struct {
 	UserCreatedAt  sql.NullTime
 	UserUpdatedAt  sql.NullTime
 }
+
+type GoCrmUserInfo struct {
+	UserID       int32
+	UserAccount  string
+	UserName     sql.NullString
+	UserAvatar   sql.NullString
+	UserState    int16
+	UserPhone    sql.NullString
+	UserGender   sql.NullInt16
+	UserBirthday sql.NullTime
+	UserEmail    sql.NullString
+	UserIsAuth   int16
+	CreateAt     sql.NullTime
+	UpdatedAt    sql.NullTime
+}
+
+type GoCrmUserVerify struct {
+	VerifyID      int32
+	VerifyOtp     string
+	VerifyKey     string
+	VerifyKeyHash string
+	VerifyType    sql.NullInt32
+	IsVerified    sql.NullInt32
+	IsDeleted     sql.NullInt32
+	VerifyCreated sql.NullTime
+	VerifyUpdated sql.NullTime
+}
