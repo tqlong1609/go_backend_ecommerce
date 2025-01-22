@@ -60,6 +60,7 @@ docker run --rm -v "${PWD}:/src" -w /src sqlc/sqlc generate
 
 # goose
 - create table
+- note: think about order of migration before run
 ```bash
-make create_migration name=name_migration
+make create_migration name=0001_create_user_verify
 ```

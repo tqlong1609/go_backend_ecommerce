@@ -1,8 +1,9 @@
 @url_dev = http://localhost:8080/v1
 
+###
 GET {{url_dev}}/ping
 Content-Type: application/json
-###
+
 POST {{url_dev}}/user/register
 Content-Type: application/json
 
@@ -10,4 +11,11 @@ Content-Type: application/json
   "account": "test@test.com",
   "password": "123456"
 }
-###
+
+// register with email
+POST {{url_dev}}/user/register-email
+Content-Type: application/json
+
+{
+  "email": "test@test.com"
+}

@@ -8,3 +8,7 @@ type RegisterInput struct {
 type RegisterOutput struct {
 	UserID int32 `json:"userID"`
 }
+
+type RegisterWithEmailInput struct {
+	Email string `json:"email"`
+}

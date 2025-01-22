@@ -40,6 +40,7 @@ docker-clean:
 
 # Section II: goose commands
 
+# tạo một file migration mới
 create_migration:
 	goose -dir=$(GOOSE_MIGRATIONS_DIR) create $(name) sql
 up:

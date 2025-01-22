@@ -2,9 +2,13 @@ package implements
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/tqlong1609/go_backend_ecommerce/global"
 	"github.com/tqlong1609/go_backend_ecommerce/internal/database"
 	"github.com/tqlong1609/go_backend_ecommerce/internal/model"
+	"github.com/tqlong1609/go_backend_ecommerce/internal/utils"
+	"go.uber.org/zap/zapcore"
 )
 
 type UserLoginImplement struct {
@@ -17,23 +21,44 @@ func InitUserLoginImplement(dbQueries *database.Queries) *UserLoginImplement {
 	}
 }
 
-func (ul *UserLoginImplement) Login(ctx context.Context) error {
+func (ul *UserLoginImplement) RegisterWithEmail(ctx context.Context, params model.RegisterWithEmailInput) error {
+	if params.Email == "" {
+		return fmt.Errorf("email is empty")
+	}
+
+	// check email valid
+	if !utils.IsValidEmail(params.Email) {
+		return fmt.Errorf("email is invalid")
+	}
+
+	// check email exist
+	_, err := ul.dbQueries.FindUserByEmail(ctx, params.Email)
+	if err == nil {
+		return fmt.Errorf("email is exist")
+	}
+
+	// Lưu OTP vào cơ sở dữ liệu
+	otp := utils.GenerateOTP()
+	err = ul.dbQueries.InsertOrUpdateOtp(ctx, database.InsertOrUpdateOtpParams{
+		VerifyKey: params.Email,
+		VerifyOtp: otp,
+	})
+
+	if err != nil {
+		return err
+	}
+
+	global.Logger.Info("Sent OTP successfully", zapcore.Field{
+		Key:    "otp",
+		Type:   zapcore.StringType,
+		String: otp,
+	}, zapcore.Field{Key: "email", Type: zapcore.StringType, String: params.Email})
+
 	return nil
 }
 
-func (ul *UserLoginImplement) Register(ctx context.Context, params model.RegisterInput) (response model.RegisterOutput, err error) {
-	salt := "test"
-	userId, err := ul.dbQueries.CreateNewUser(ctx, database.CreateNewUserParams{
-		UserAccount:  params.Account,
-		UserPassword: params.Password,
-		UserSalt:     salt,
-	})
-	if err != nil {
-		return response, err
-	}
-	return model.RegisterOutput{
-		UserID: userId,
-	}, nil
+func (ul *UserLoginImplement) Login(ctx context.Context) error {
+	return nil
 }
 
 func (ul *UserLoginImplement) Logout(ctx context.Context) error {

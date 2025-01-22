@@ -12,8 +12,8 @@ type RegisterResponse struct {
 
 type (
 	IUserLogin interface {
+		RegisterWithEmail(ctx context.Context, params model.RegisterWithEmailInput) error
 		Login(ctx context.Context) error
-		Register(ctx context.Context, params model.RegisterInput) (model.RegisterOutput, error)
 		Logout(ctx context.Context) error
 		VerifyOTP(ctx context.Context) error
 		UpdatePassword(ctx context.Context) error

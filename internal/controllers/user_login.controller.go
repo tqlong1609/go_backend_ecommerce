@@ -11,17 +11,18 @@ var UserLogin = new(UserLoginController)
 
 type UserLoginController struct{}
 
-func (ulc *UserLoginController) Register(c *gin.Context) {
-	var params model.RegisterInput
-
+// register with email
+func (ulc *UserLoginController) RegisterWithEmail(c *gin.Context) {
+	var params model.RegisterWithEmailInput
 	if err := c.ShouldBindJSON(&params); err != nil {
 		response.FailResponse(c, response.BadRequestCode, err.Error())
 		return
 	}
-	data, err := services.UserLogin().Register(c, params)
+	err := services.UserLogin().RegisterWithEmail(c, params)
 	if err != nil {
 		response.FailResponse(c, response.FailCode, err.Error())
 		return
 	}
-	response.SuccessResponse(c, response.SuccessCode, data)
+	response.SuccessResponse(c, response.SuccessCode, nil)
+	return
 }

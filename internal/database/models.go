@@ -6,13 +6,14 @@ package database
 
 import (
 	"database/sql"
+	"time"
 )
 
-type GoCrmUser struct {
+type UserBase struct {
 	UserID         int32
 	UserAccount    string
 	UserPassword   string
-	UserSalt       string
+	UserSait       string
 	UserLoginTime  sql.NullTime
 	UserLogoutTime sql.NullTime
 	UserLoginIp    sql.NullString
@@ -20,7 +21,7 @@ type GoCrmUser struct {
 	UserUpdatedAt  sql.NullTime
 }
 
-type GoCrmUserInfo struct {
+type UserInfo struct {
 	UserID       int32
 	UserAccount  string
 	UserName     sql.NullString
@@ -35,14 +36,22 @@ type GoCrmUserInfo struct {
 	UpdatedAt    sql.NullTime
 }
 
-type GoCrmUserVerify struct {
-	VerifyID      int32
-	VerifyOtp     string
-	VerifyKey     string
-	VerifyKeyHash string
-	VerifyType    sql.NullInt32
-	IsVerified    sql.NullInt32
-	IsDeleted     sql.NullInt32
-	VerifyCreated sql.NullTime
-	VerifyUpdated sql.NullTime
+type UserToken struct {
+	UserID       int32
+	RefreshToken string
+	ExpiresAt    time.Time
+}
+
+type UserVerify struct {
+	VerifyID       int32
+	VerifyOtp      string
+	VerifyKey      string
+	VerifyKeyHash  string
+	VerifyType     sql.NullInt32
+	IsVerified     sql.NullInt32
+	IsDeleted      sql.NullInt32
+	VerifyCreated  sql.NullTime
+	VerifyUpdated  sql.NullTime
+	FailedAttempts int32
+	LockUntil      sql.NullTime
 }

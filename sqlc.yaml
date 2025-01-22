@@ -1,5 +1,6 @@
 version: "2"
 sql:
+  # Package cho toàn bộ các file SQL
   - engine: "postgresql"
     queries: "sql/queries"
     schema: "sql/schema"
@@ -7,3 +8,13 @@ sql:
       go:
         package: "database"
         out: "internal/database"
+
+  # Package riêng cho file cụ thể
+  # Note: Để sử dụng package riêng cho file cụ thể, bạn cần Tạm thời bình luận hoặc xóa phần cấu hình khác
+  # - engine: "postgresql"
+  #   queries: "sql/queries/user_base.sql"
+  #   schema: "sql/schema"
+  #   gen:
+  #     go:
+  #       package: "database"
+  #       out: "internal/database"
