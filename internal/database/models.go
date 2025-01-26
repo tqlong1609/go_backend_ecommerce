@@ -13,7 +13,7 @@ type UserBase struct {
 	UserID         int32
 	UserAccount    string
 	UserPassword   string
-	UserSait       string
+	UserSalt       string
 	UserLoginTime  sql.NullTime
 	UserLogoutTime sql.NullTime
 	UserLoginIp    sql.NullString

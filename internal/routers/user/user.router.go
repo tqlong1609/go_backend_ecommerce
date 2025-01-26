@@ -14,6 +14,7 @@ func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 		userRouterPublic.POST("/register-email", controllers.UserLogin.RegisterWithEmail)
 		userRouterPublic.POST("/verify-otp", controllers.UserLogin.VerifyOTP)
 		userRouterPublic.POST("/login")
+		userRouterPublic.POST("/complete-registration", controllers.UserLogin.CompleteRegistration)
 	}
 
 	// private router

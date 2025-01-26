@@ -26,5 +26,15 @@ Content-Type: application/json
 
 {
   "email": "test@test.com",
-  "otp": "848593"
+  "otp": "344598"
+}
+
+// complete register
+POST {{url_dev}}/user/complete-registration
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123456",
+  "name": "test"
 }

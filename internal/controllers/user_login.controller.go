@@ -40,3 +40,22 @@ func (ulc *UserLoginController) VerifyOTP(c *gin.Context) {
 	}
 	response.SuccessResponse(c, response.SuccessCode, nil)
 }
+
+// complete registration
+func (ulc *UserLoginController) CompleteRegistration(c *gin.Context) {
+	var params model.CompleteRegistrationInput
+	if err := c.ShouldBindJSON(&params); err != nil {
+		response.FailResponse(c, response.BadRequestCode, err.Error())
+		return
+	}
+	err := services.UserLogin().CompleteRegistration(c, params)
+	if err != nil {
+		response.FailResponse(c, response.FailCode, err.Error())
+		return
+	}
+	response.SuccessResponse(
+		c,
+		response.SuccessCode,
+		nil,
+	)
+}

@@ -17,3 +17,9 @@ type VerifyOTPInput struct {
 	Email string `json:"email"`
 	OTP   string `json:"otp"`
 }
+
+type CompleteRegistrationInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Name     string `json:"name"`
+}

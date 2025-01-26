@@ -6,10 +6,6 @@ import (
 	"github.com/tqlong1609/go_backend_ecommerce/internal/model"
 )
 
-type RegisterResponse struct {
-	UserID int `json:"userID"`
-}
-
 type (
 	IUserLogin interface {
 		RegisterWithEmail(ctx context.Context, params model.RegisterWithEmailInput) error
@@ -17,6 +13,7 @@ type (
 		Logout(ctx context.Context) error
 		VerifyOTP(ctx context.Context, params model.VerifyOTPInput) error
 		UpdatePassword(ctx context.Context) error
+		CompleteRegistration(ctx context.Context, params model.CompleteRegistrationInput) error
 	}
 	IUserInfo interface {
 		GetUserInfo(ctx context.Context) error

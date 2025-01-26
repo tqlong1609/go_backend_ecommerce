@@ -10,39 +10,29 @@ import (
 	"database/sql"
 )
 
-const addUserInfo = `-- name: AddUserInfo :one
+const addUserInfoBase = `-- name: AddUserInfoBase :one
 INSERT INTO user_base (
   user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, NOW(), NOW()
+  $1, $2, $3, NULL, NULL, NULL, NOW(), NOW()
 )
 RETURNING user_id, user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 `
 
-type AddUserInfoParams struct {
-	UserAccount    string
-	UserPassword   string
-	UserSait       string
-	UserLoginTime  sql.NullTime
-	UserLogoutTime sql.NullTime
-	UserLoginIp    sql.NullString
+type AddUserInfoBaseParams struct {
+	UserAccount  string
+	UserPassword string
+	UserSalt     string
 }
 
-func (q *Queries) AddUserInfo(ctx context.Context, arg AddUserInfoParams) (UserBase, error) {
-	row := q.db.QueryRowContext(ctx, addUserInfo,
-		arg.UserAccount,
-		arg.UserPassword,
-		arg.UserSait,
-		arg.UserLoginTime,
-		arg.UserLogoutTime,
-		arg.UserLoginIp,
-	)
+func (q *Queries) AddUserInfoBase(ctx context.Context, arg AddUserInfoBaseParams) (UserBase, error) {
+	row := q.db.QueryRowContext(ctx, addUserInfoBase, arg.UserAccount, arg.UserPassword, arg.UserSalt)
 	var i UserBase
 	err := row.Scan(
 		&i.UserID,
 		&i.UserAccount,
 		&i.UserPassword,
-		&i.UserSait,
+		&i.UserSalt,
 		&i.UserLoginTime,
 		&i.UserLogoutTime,
 		&i.UserLoginIp,
@@ -52,7 +42,7 @@ func (q *Queries) AddUserInfo(ctx context.Context, arg AddUserInfoParams) (UserB
 	return i, err
 }
 
-const changePasswordUser = `-- name: ChangePasswordUser :exec
+const changePasswordUserBase = `-- name: ChangePasswordUserBase :exec
 UPDATE user_base
 SET 
   user_password = $2,
@@ -60,13 +50,13 @@ SET
 WHERE user_id = $1
 `
 
-type ChangePasswordUserParams struct {
+type ChangePasswordUserBaseParams struct {
 	UserID       int32
 	UserPassword string
 }
 
-func (q *Queries) ChangePasswordUser(ctx context.Context, arg ChangePasswordUserParams) error {
-	_, err := q.db.ExecContext(ctx, changePasswordUser, arg.UserID, arg.UserPassword)
+func (q *Queries) ChangePasswordUserBase(ctx context.Context, arg ChangePasswordUserBaseParams) error {
+	_, err := q.db.ExecContext(ctx, changePasswordUserBase, arg.UserID, arg.UserPassword)
 	return err
 }
 
@@ -83,7 +73,7 @@ func (q *Queries) FindUserByEmail(ctx context.Context, userAccount string) (User
 		&i.UserID,
 		&i.UserAccount,
 		&i.UserPassword,
-		&i.UserSait,
+		&i.UserSalt,
 		&i.UserLoginTime,
 		&i.UserLogoutTime,
 		&i.UserLoginIp,
@@ -93,20 +83,20 @@ func (q *Queries) FindUserByEmail(ctx context.Context, userAccount string) (User
 	return i, err
 }
 
-const findUserById = `-- name: FindUserById :one
+const findUserByIdBase = `-- name: FindUserByIdBase :one
 SELECT user_id, user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 FROM user_base
 WHERE user_id = $1
 `
 
-func (q *Queries) FindUserById(ctx context.Context, userID int32) (UserBase, error) {
-	row := q.db.QueryRowContext(ctx, findUserById, userID)
+func (q *Queries) FindUserByIdBase(ctx context.Context, userID int32) (UserBase, error) {
+	row := q.db.QueryRowContext(ctx, findUserByIdBase, userID)
 	var i UserBase
 	err := row.Scan(
 		&i.UserID,
 		&i.UserAccount,
 		&i.UserPassword,
-		&i.UserSait,
+		&i.UserSalt,
 		&i.UserLoginTime,
 		&i.UserLogoutTime,
 		&i.UserLoginIp,
@@ -116,7 +106,7 @@ func (q *Queries) FindUserById(ctx context.Context, userID int32) (UserBase, err
 	return i, err
 }
 
-const updateUserInfo = `-- name: UpdateUserInfo :exec
+const updateUserInfoBase = `-- name: UpdateUserInfoBase :exec
 UPDATE user_base
 SET 
   user_salt = $2,
@@ -127,18 +117,18 @@ SET
 WHERE user_id = $1
 `
 
-type UpdateUserInfoParams struct {
+type UpdateUserInfoBaseParams struct {
 	UserID         int32
-	UserSait       string
+	UserSalt       string
 	UserLoginTime  sql.NullTime
 	UserLogoutTime sql.NullTime
 	UserLoginIp    sql.NullString
 }
 
-func (q *Queries) UpdateUserInfo(ctx context.Context, arg UpdateUserInfoParams) error {
-	_, err := q.db.ExecContext(ctx, updateUserInfo,
+func (q *Queries) UpdateUserInfoBase(ctx context.Context, arg UpdateUserInfoBaseParams) error {
+	_, err := q.db.ExecContext(ctx, updateUserInfoBase,
 		arg.UserID,
-		arg.UserSait,
+		arg.UserSalt,
 		arg.UserLoginTime,
 		arg.UserLogoutTime,
 		arg.UserLoginIp,

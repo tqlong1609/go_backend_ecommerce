@@ -117,6 +117,43 @@ func (ul *UserLoginImplement) VerifyOTP(ctx context.Context, params model.Verify
 	return nil
 }
 
+// complete registration
+func (ul *UserLoginImplement) CompleteRegistration(ctx context.Context, params model.CompleteRegistrationInput) error {
+	if params.Email == "" || params.Password == "" {
+		return fmt.Errorf("email or password is empty")
+	}
+
+	// Kiểm tra xem tài khoản đã tồn tại chưa
+	_, err := ul.dbQueries.FindUserByEmail(ctx, params.Email)
+	if err == nil {
+		return fmt.Errorf("email is exist")
+	}
+
+	// Tạo salt và hash mật khẩu
+	salt := utils.GenerateSalt()
+	passwordHash := utils.GeneratePassword(params.Password, salt)
+
+	// Thêm người dùng vào cơ sở dữ liệu
+	userInfoBase, err := ul.dbQueries.AddUserInfoBase(ctx, database.AddUserInfoBaseParams{
+		UserAccount:  params.Email,
+		UserPassword: passwordHash,
+		UserSalt:     salt,
+	})
+	if err != nil {
+		return err
+	}
+
+	_, err = ul.dbQueries.InsertUserInfo(ctx, database.InsertUserInfoParams{
+		UserID:      userInfoBase.UserID,
+		UserAccount: params.Email,
+		UserName:    utils.ToNullString(params.Name),
+	})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (ul *UserLoginImplement) UpdatePassword(ctx context.Context) error {
 	return nil
 }

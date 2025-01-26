@@ -3,7 +3,7 @@ SELECT *
 FROM user_base
 WHERE user_account = $1;
 
--- name: AddUserInfo :one
+-- name: AddUserInfoBase :one
 INSERT INTO user_base (
   user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 ) VALUES (
@@ -11,7 +11,7 @@ INSERT INTO user_base (
 )
 RETURNING *;
 
--- name: UpdateUserInfo :exec
+-- name: UpdateUserInfoBase :exec
 UPDATE user_base
 SET 
   user_salt = $2,
@@ -21,12 +21,12 @@ SET
   user_updated_at = NOW()
 WHERE user_id = $1;
 
--- name: FindUserById :one
+-- name: FindUserByIdBase :one
 SELECT *
 FROM user_base
 WHERE user_id = $1;
 
--- name: ChangePasswordUser :exec
+-- name: ChangePasswordUserBase :exec
 UPDATE user_base
 SET 
   user_password = $2,
