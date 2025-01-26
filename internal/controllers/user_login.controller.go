@@ -24,5 +24,19 @@ func (ulc *UserLoginController) RegisterWithEmail(c *gin.Context) {
 		return
 	}
 	response.SuccessResponse(c, response.SuccessCode, nil)
-	return
+}
+
+// verify otp
+func (ulc *UserLoginController) VerifyOTP(c *gin.Context) {
+	var params model.VerifyOTPInput
+	if err := c.ShouldBindJSON(&params); err != nil {
+		response.FailResponse(c, response.BadRequestCode, err.Error())
+		return
+	}
+	err := services.UserLogin().VerifyOTP(c, params)
+	if err != nil {
+		response.FailResponse(c, response.FailCode, err.Error())
+		return
+	}
+	response.SuccessResponse(c, response.SuccessCode, nil)
 }

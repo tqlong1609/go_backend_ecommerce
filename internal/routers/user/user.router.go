@@ -12,6 +12,7 @@ func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	userRouterPublic := Router.Group("/user")
 	{
 		userRouterPublic.POST("/register-email", controllers.UserLogin.RegisterWithEmail)
+		userRouterPublic.POST("/verify-otp", controllers.UserLogin.VerifyOTP)
 		userRouterPublic.POST("/login")
 	}
 

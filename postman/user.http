@@ -19,3 +19,12 @@ Content-Type: application/json
 {
   "email": "test@test.com"
 }
+
+// verify OTP
+POST {{url_dev}}/user/verify-otp
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "otp": "848593"
+}

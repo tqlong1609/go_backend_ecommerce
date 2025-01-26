@@ -15,7 +15,7 @@ type (
 		RegisterWithEmail(ctx context.Context, params model.RegisterWithEmailInput) error
 		Login(ctx context.Context) error
 		Logout(ctx context.Context) error
-		VerifyOTP(ctx context.Context) error
+		VerifyOTP(ctx context.Context, params model.VerifyOTPInput) error
 		UpdatePassword(ctx context.Context) error
 	}
 	IUserInfo interface {

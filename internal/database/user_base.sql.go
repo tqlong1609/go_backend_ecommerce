@@ -12,11 +12,11 @@ import (
 
 const addUserInfo = `-- name: AddUserInfo :one
 INSERT INTO user_base (
-  user_account, user_password, user_sait, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
+  user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 ) VALUES (
   $1, $2, $3, $4, $5, $6, NOW(), NOW()
 )
-RETURNING user_id, user_account, user_password, user_sait, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
+RETURNING user_id, user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 `
 
 type AddUserInfoParams struct {
@@ -71,7 +71,7 @@ func (q *Queries) ChangePasswordUser(ctx context.Context, arg ChangePasswordUser
 }
 
 const findUserByEmail = `-- name: FindUserByEmail :one
-SELECT user_id, user_account, user_password, user_sait, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
+SELECT user_id, user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 FROM user_base
 WHERE user_account = $1
 `
@@ -94,7 +94,7 @@ func (q *Queries) FindUserByEmail(ctx context.Context, userAccount string) (User
 }
 
 const findUserById = `-- name: FindUserById :one
-SELECT user_id, user_account, user_password, user_sait, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
+SELECT user_id, user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 FROM user_base
 WHERE user_id = $1
 `
@@ -119,7 +119,7 @@ func (q *Queries) FindUserById(ctx context.Context, userID int32) (UserBase, err
 const updateUserInfo = `-- name: UpdateUserInfo :exec
 UPDATE user_base
 SET 
-  user_sait = $2,
+  user_salt = $2,
   user_login_time = $3,
   user_logout_time = $4,
   user_login_ip = $5,

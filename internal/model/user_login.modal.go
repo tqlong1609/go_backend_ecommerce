@@ -12,3 +12,8 @@ type RegisterOutput struct {
 type RegisterWithEmailInput struct {
 	Email string `json:"email"`
 }
+
+type VerifyOTPInput struct {
+	Email string `json:"email"`
+	OTP   string `json:"otp"`
+}

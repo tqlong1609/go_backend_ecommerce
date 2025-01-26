@@ -5,16 +5,16 @@ WHERE user_account = $1;
 
 -- name: AddUserInfo :one
 INSERT INTO user_base (
-  user_account, user_password, user_sait, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
+  user_account, user_password, user_salt, user_login_time, user_logout_time, user_login_ip, user_created_at, user_updated_at
 ) VALUES (
-  $1, $2, $3, $4, $5, $6, NOW(), NOW()
+  $1, $2, $3, NULL, NULL, NULL, NOW(), NOW()
 )
 RETURNING *;
 
 -- name: UpdateUserInfo :exec
 UPDATE user_base
 SET 
-  user_sait = $2,
+  user_salt = $2,
   user_login_time = $3,
   user_logout_time = $4,
   user_login_ip = $5,

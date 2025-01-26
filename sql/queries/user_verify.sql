@@ -14,3 +14,27 @@ DO UPDATE SET
   failed_attempts = EXCLUDED.failed_attempts,
   lock_until = EXCLUDED.lock_until;
 
+-- name: GetOtpRecord :one
+SELECT *
+FROM user_verify
+WHERE verify_key = $1;
+
+-- name: UpdateFailedAttempts :exec
+UPDATE user_verify
+SET failed_attempts = $2,
+    verify_updated = NOW()
+WHERE verify_key = $1;
+
+-- name: LockOtp :exec
+UPDATE user_verify
+SET lock_until = $2,
+    verify_updated = NOW()
+WHERE verify_key = $1;
+
+-- name: VerifySuccessOtp :exec
+UPDATE user_verify
+SET is_verified = 1,
+    failed_attempts = 0,
+    verify_updated = NOW()
+WHERE verify_key = $1;
+
