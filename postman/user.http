@@ -38,3 +38,12 @@ Content-Type: application/json
   "password": "123456",
   "name": "test"
 }
+
+// login
+POST {{url_dev}}/user/login
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123456"
+}

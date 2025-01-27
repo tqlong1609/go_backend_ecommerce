@@ -58,8 +58,42 @@ func (ul *UserLoginImplement) RegisterWithEmail(ctx context.Context, params mode
 	return nil
 }
 
-func (ul *UserLoginImplement) Login(ctx context.Context) error {
-	return nil
+func (ul *UserLoginImplement) Login(ctx context.Context, input model.LoginInput) (output model.LoginOutput, err error) {
+	if input.Email == "" || input.Password == "" {
+		return output, fmt.Errorf("email or password is empty")
+	}
+	// Lấy thông tin người dùng từ cơ sở dữ liệu
+	user, err := ul.dbQueries.FindUserByEmail(ctx, input.Email)
+	if err != nil {
+		return output, fmt.Errorf("email or password is incorrect")
+	}
+	// Xác thực mật khẩu
+	if !utils.VerifyPassword(input.Password, user.UserPassword, user.UserSalt) {
+		return output, fmt.Errorf("email or password is incorrect")
+	}
+	// Tạo token và refresh token
+	accessToken, err := utils.GenerateToken(user.UserID, "access", time.Minute*15)
+	if err != nil {
+		return output, err
+	}
+	refreshToken, err := utils.GenerateToken(user.UserID, "refresh", time.Hour*24*7)
+	if err != nil {
+		return output, err
+	}
+	// Lưu refresh token vào cơ sở dữ liệu
+	err = ul.dbQueries.AddRefreshToken(ctx, database.AddRefreshTokenParams{
+		UserID:       user.UserID,
+		RefreshToken: refreshToken,
+		ExpiresAt:    time.Now().Add(time.Hour * 24 * 7),
+	})
+	if err != nil {
+		return output, err
+	}
+	return model.LoginOutput{
+		UserID:       user.UserID,
+		AccessToken:  accessToken,
+		RefreshToken: refreshToken,
+	}, nil
 }
 
 func (ul *UserLoginImplement) Logout(ctx context.Context) error {

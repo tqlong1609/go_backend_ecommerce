@@ -23,3 +23,14 @@ type CompleteRegistrationInput struct {
 	Password string `json:"password"`
 	Name     string `json:"name"`
 }
+
+type LoginInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type LoginOutput struct {
+	UserID       int32  `json:"userID"`
+	AccessToken  string `json:"token"`
+	RefreshToken string `json:"refreshToken"`
+}

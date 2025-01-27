@@ -59,3 +59,17 @@ func (ulc *UserLoginController) CompleteRegistration(c *gin.Context) {
 		nil,
 	)
 }
+
+func (ulc *UserLoginController) Login(c *gin.Context) {
+	var params model.LoginInput
+	if err := c.ShouldBindJSON(&params); err != nil {
+		response.FailResponse(c, response.BadRequestCode, err.Error())
+		return
+	}
+	output, err := services.UserLogin().Login(c, params)
+	if err != nil {
+		response.FailResponse(c, response.FailCode, err.Error())
+		return
+	}
+	response.SuccessResponse(c, response.SuccessCode, output)
+}

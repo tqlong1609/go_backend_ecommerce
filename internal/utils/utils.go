@@ -40,7 +40,11 @@ func GeneratePassword(password, salt string) string {
 	return password + salt
 }
 
-func generateToken(userId int32, tokenType string, duration time.Duration) (string, error) {
+func VerifyPassword(password, hashedPassword, salt string) bool {
+	return hashedPassword == GeneratePassword(password, salt)
+}
+
+func GenerateToken(userId int32, tokenType string, duration time.Duration) (string, error) {
 	// Khởi tạo claims (payload) của token
 	claims := jwt.MapClaims{
 		"user_id": userId,
